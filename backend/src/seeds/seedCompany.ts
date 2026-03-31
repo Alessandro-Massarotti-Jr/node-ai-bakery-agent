@@ -31,12 +31,18 @@ export async function seedCompany(
   console.log(`Deleting existing chunks for source="${SOURCE}"...`);
   await repository.deleteBySource({ source: SOURCE });
 
-  console.log(`Seeding ${chunks.length} chunks (size=${CHUNK_SIZE}, overlap=${CHUNK_OVERLAP})...`);
+  console.log(
+    `Seeding ${chunks.length} chunks (size=${CHUNK_SIZE}, overlap=${CHUNK_OVERLAP})...`,
+  );
 
   for (let i = 0; i < chunks.length; i++) {
     const text = chunks[i]!;
     const vector = await embedding.embed({ text });
-    await repository.upsert({ id: i, vector, payload: { text, source: SOURCE } });
+    await repository.upsert({
+      id: i,
+      vector,
+      payload: { text, source: SOURCE },
+    });
     console.log(`  Indexed chunk id=${i}`);
   }
 

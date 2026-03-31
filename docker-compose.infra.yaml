@@ -32,7 +32,6 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
-    restart: unless-stopped
     entrypoint: >
       /bin/sh -c "
       ollama serve &
@@ -48,7 +47,6 @@ services:
       - "6333:6333"
     volumes:
       - qdrant_data:/qdrant/storage
-    restart: unless-stopped
 
 volumes:
   ollama_data:

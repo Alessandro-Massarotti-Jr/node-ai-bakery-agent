@@ -22,8 +22,6 @@ export class OllamaLlmProvider implements ILlmProvider {
         stream: false,
       });
 
-      console.log(response.data);
-
       return response.data.message as any;
     } catch (error) {
       console.error(axios.isAxiosError(error) ? error.response?.data : error);
