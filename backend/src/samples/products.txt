@@ -1,0 +1,17 @@
+Catálogo de Produtos
+
+- Pão Artesanal
+- Bolo de chocolate belga
+- croissant de manteiga
+
+Pão Artesanal
+Código PROD-001. Preço R$ 12,00. Estoque: 30 unidades.
+Pão produzido com fermentação natural de 12 horas, farinha de trigo integral e sal marinho. Casca crocante e miolo macio. Ideal para o café da manhã ou lanches. Ingredientes: farinha de trigo integral, água, sal marinho, fermento natural (levain). Peso 500g. Validade 3 dias. Disponível todos os dias a partir das 7h.
+
+Bolo de Chocolate Belga
+Código PROD-002. Preço R$ 85,00. Estoque: 5 unidades.
+Bolo úmido de chocolate belga 70% cacau, recheado com ganache cremosa e coberto com calda de chocolate. Serve de 10 a 12 pessoas, perfeito para aniversários e celebrações. Ingredientes: farinha de trigo, açúcar mascavo, chocolate belga 70%, manteiga, ovos, leite, fermento, cacau em pó, creme de leite. Peso 1,2kg. Validade 5 dias refrigerado. Disponível sob encomenda com 24 horas de antecedência.
+
+Croissant de Manteiga
+Código PROD-003. Preço R$ 9,50. Estoque: 50 unidades.
+Croissant folhado feito com manteiga francesa AOP, massa laminada com 27 camadas. Crocante por fora e levemente amanteigado por dentro. Ingredientes: farinha de trigo tipo 00, manteiga francesa AOP, leite integral, açúcar, sal, fermento biológico, ovos. Peso 90g por unidade. Validade 1 dia, consumir no mesmo dia da compra. Disponível todos os dias a partir das 6h30, até esgotar o estoque.
