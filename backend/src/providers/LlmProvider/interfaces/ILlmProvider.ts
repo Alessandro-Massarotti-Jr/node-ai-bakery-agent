@@ -11,9 +11,20 @@ export type Message = {
   }>;
 };
 
+export interface LlmUsage {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
+}
+
+export interface LlmChatResult {
+  message: Message;
+  usage: LlmUsage;
+}
+
 export interface ILlmProvider {
   chat(data: {
     agent: Agent;
     messages: Message[];
-  }): Promise<Message>;
+  }): Promise<LlmChatResult>;
 }

@@ -24,10 +24,16 @@ function addMessage(role, content) {
 function addTyping() {
   const el = document.createElement("div");
   el.className = "message assistant typing";
-  el.innerHTML = `<div class="bubble"><div class="dots"><span></span><span></span><span></span></div></div>`;
+  el.innerHTML = `<div class="bubble"><div class="dots"><span></span><span></span><span></span></div><span class="status-text">Pensando...</span></div>`;
   messagesEl.appendChild(el);
   messagesEl.scrollTop = messagesEl.scrollHeight;
   return el;
+}
+
+function updateStatus(typingEl, event) {
+  const statusEl = typingEl.querySelector(".status-text");
+  if (!statusEl) return;
+  statusEl.textContent = event.status ?? "Processando...";
 }
 
 function setLoading(loading) {
@@ -56,12 +62,30 @@ async function send() {
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-    const data = await res.json();
-    typing.remove();
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
 
-    const reply = data.message ?? "(sem resposta)";
-    addMessage("assistant", reply);
-    history.push({ role: "assistant", content: reply });
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        const event = JSON.parse(line);
+        if (event.type === "done") {
+          typing.remove();
+          const reply = event.message ?? "(sem resposta)";
+          addMessage("assistant", reply);
+          history.push({ role: "assistant", content: reply });
+        } else {
+          updateStatus(typing, event);
+          await new Promise((r) => setTimeout(r, 0));
+        }
+      }
+    }
   } catch {
     typing.remove();
     const el = document.createElement("div");

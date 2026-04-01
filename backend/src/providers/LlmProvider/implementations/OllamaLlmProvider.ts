@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { Agent } from "../../../agents";
-import { ILlmProvider, Message } from "../interfaces/ILlmProvider";
+import { ILlmProvider, LlmChatResult, Message } from "../interfaces/ILlmProvider";
 import { Parameter, Tool } from "../../../tools";
 
 export class OllamaLlmProvider implements ILlmProvider {
@@ -11,7 +11,7 @@ export class OllamaLlmProvider implements ILlmProvider {
     this.requester = axios.create({ baseURL });
   }
 
-  async chat(data: { agent: Agent; messages: Message[] }): Promise<Message> {
+  async chat(data: { agent: Agent; messages: Message[] }): Promise<LlmChatResult> {
     try {
       const { agent, messages } = data;
 
@@ -22,7 +22,17 @@ export class OllamaLlmProvider implements ILlmProvider {
         stream: false,
       });
 
-      return response.data.message as any;
+      const promptTokens: number = response.data.prompt_eval_count ?? 0;
+      const completionTokens: number = response.data.eval_count ?? 0;
+
+      return {
+        message: response.data.message as Message,
+        usage: {
+          prompt_tokens: promptTokens,
+          completion_tokens: completionTokens,
+          total_tokens: promptTokens + completionTokens,
+        },
+      };
     } catch (error) {
       console.error(axios.isAxiosError(error) ? error.response?.data : error);
       throw error;
