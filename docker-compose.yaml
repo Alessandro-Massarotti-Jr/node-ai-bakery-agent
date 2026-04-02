@@ -3,7 +3,7 @@ services:
     build:
       context: ./backend
       dockerfile: ./.docker/Dockerfile.dev
-    command: "/home/node/app/.docker/start-infra.sh"
+    command: "/home/node/app/.docker/start-dev.sh"
     volumes:
       - ./backend:/home/node/app:cached
     environment:
